@@ -96,7 +96,7 @@ module Specinfra
       #rescue ::Docker::Error::ServerError => e
         stdout, stderr, status = Open3.capture3('sudo lxc-attach -n '+ current_image.id + ' -- bash -c ' + cmd)
 
-        CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
+        CommandResult.new :stdout => stdout, :stderr => stderr,
         :exit_status => status
       rescue ::Docker::Error::DockerError => e
         raise
