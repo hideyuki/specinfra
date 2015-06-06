@@ -95,7 +95,6 @@ module Specinfra
         :exit_status => status
       rescue ::Docker::Error::ServerError => e
         print "container image id: ", current_image.id + "\n"
-        print "container image json: ", current_image.json + "\n"
 
         #docker_cmd = 'sudo lxc-attach -n "' + current_image.id + '" -- bash -c "' + cmd + '"'
         docker_cmd = 'sudo lxc-attach -n "' + current_image.id + '" -- bash -c "echo hello"'
