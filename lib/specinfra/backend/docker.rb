@@ -94,6 +94,7 @@ module Specinfra
         CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
         :exit_status => status
       rescue ::Docker::Error::ServerError => e
+        Open3.capture3('sleep 40')
         print "container image id: ", current_image.id + "\n"
 
         #docker_cmd = 'sudo lxc-attach -n "' + current_image.id + '" -- bash -c "' + cmd + '"'
