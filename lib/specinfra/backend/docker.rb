@@ -89,11 +89,11 @@ module Specinfra
       end
 
       def docker_run!(cmd, opts={})
-        #stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd])
+        stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd])
 
-        #CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
-        #:exit_status => status
-      #rescue ::Docker::Error::ServerError => e
+        CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
+        :exit_status => status
+      rescue ::Docker::Error::ServerError => e
         stdout, stderr, status = Open3.capture3('sudo lxc-attach -n '+ current_image.id + ' -- bash -c ' + cmd)
 
         CommandResult.new :stdout => stdout, :stderr => stderr,
