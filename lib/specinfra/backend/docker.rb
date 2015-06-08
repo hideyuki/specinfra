@@ -94,14 +94,15 @@ module Specinfra
         CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
         :exit_status => status
       rescue ::Docker::Error::ServerError => e
-        Open3.capture3('sleep 40')
         print "container image id: ", current_image.id + "\n"
 
         #docker_cmd = 'sudo lxc-attach -n "' + current_image.id + '" -- bash -c "' + cmd + '"'
         docker_cmd = 'sudo lxc-attach -n "' + current_image.id + '" -- bash -c "echo hello"'
 
-        o, e, s = Open3.capture3('sudo lxc-attach -n "$(docker inspect --format \'{{.Id}}\' specinfra_test)" -- bash -c echo hello')
-        print o, e, s, "\n"
+        o, e, s = Open3.capture3('sudo lxc-attach -n "$(docker inspect --format \'{{.Id}}\' specinfra_test)" -- bash -c docker ps -a')
+        print "output: ", o, "\n"
+        print "error: ", e, "\n"
+        print "s: ", s, "\n"
 
         print "command: ", docker_cmd + "\n"
 
